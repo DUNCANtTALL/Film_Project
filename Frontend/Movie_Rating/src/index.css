@@ -1,0 +1,8 @@
+body{
+  background-image: url('./assets/mv_background.jpeg');
+  background-repeat: no-repeat;
+  background-size: cover;        /* ajuste l’image au conteneur */   /* centre l’image */
+  height: 100%;
+  width: 100%;
+  position: fixed;
+}
