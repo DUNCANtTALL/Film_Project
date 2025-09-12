@@ -1,0 +1,47 @@
+.Header{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40px;
+  font-weight: 700; 
+  font-size: 50px;
+}
+
+.NavigationCategories{
+  margin: 160px 0 100px 0;
+}
+
+.NavigationCategories .nav-pills {
+  font-weight: 400;
+  font-size: 20px;
+  --bs-nav-pills-link-active-bg: rgb(0, 0, 0);
+  --bs-nav-pills-link-active-color:white;
+  --bs-nav-link-color:white;
+  --bs-nav-link-hover-active-color: white;
+}
+
+.nav-pills .nav-link.active {
+  box-shadow: 0 4px 6px rgb(255, 255, 255);
+}
+
+.nav{
+  --bs-nav-link-color:white;
+  --bs-nav-link-hover-active-color: white;
+  --bs-nav-link-hover-color: #dee2e6 !important;
+}
+
+.tab-content{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap; /* Permet le retour à la ligne */
+  justify-content: center;
+}
+
+.card {
+  margin: 10px; /* Marge autour de chaque carte */
+}
+
+div.card-title.h5{
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+}
