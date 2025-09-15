@@ -1,17 +1,34 @@
 import { Nav, Row, Tab } from "react-bootstrap"
-import { 
+/*import { 
   Science_Fiction,  
   Amour,
   Humour,
   Horreur,
   Action
-} from "../data";
+} from "../data";*/
 
+import movies from "../data";
 import CardFilm from "./CardFilm"
+import { useEffect, useState } from "react";
 
 
 
 function NavigationCategories() {
+
+  const [actions,SetActions] = useState([]);
+  const [amour,SetAmour] = useState([]);
+  const [horror,SetHorror] = useState([]);
+  const [humour,SetHumour] = useState([]);
+  const [sciencefiction,SetSciencefiction] = useState([]);
+
+  useEffect(() => {
+    SetActions(movies.filter((movie, index) => movie.category === "Action"))
+    SetAmour(movies.filter((movie, index) => movie.category === "Amour"))
+    SetHorror(movies.filter((movie, index) => movie.category === "Horror"))
+    SetHumour(movies.filter((movie, index) => movie.category === "Humour"))
+    SetSciencefiction(movies.filter((movie, index) => movie.category === "Science-Fiction"))
+  },[movies])
+
   return (
     <div className='NavigationCategories'>
         <Tab.Container id="projects-tabs" defaultActiveKey="first">
@@ -44,11 +61,12 @@ function NavigationCategories() {
                     <Tab.Pane eventKey="first">
                       <Row>
                         {
-                          Science_Fiction
-                          .sort((film1, film2) => new Date(film2.date_sortie) - new Date(film1.date_sortie)) // Tri par date croissante
-                          .map((film, index) => (
-                            <CardFilm key={index} {...film} />
-                          ))
+                          actions.map((movie, index) =>{
+                            return(
+                              <CardFilm key={index}
+                              {...movie}/>
+                            )
+                          })
                         }
                     </Row>
                     </Tab.Pane>
@@ -56,13 +74,10 @@ function NavigationCategories() {
                     <Tab.Pane eventKey="second">
                     <Row>
                         {
-                          Humour.sort((a,b) => new Date(b.date_sortie) - new Date(a.date_sortie))
-                          .map((film, index) => {
-                            return (
-                              <CardFilm
-                                key={index}
-                                {...film}
-                                />
+                          humour.map((movie, index) =>{
+                            return(
+                              <CardFilm key={index}
+                              {...movie}/>
                             )
                           })
                         }
@@ -71,49 +86,34 @@ function NavigationCategories() {
 
                     <Tab.Pane eventKey="third">
                     <Row>
-                        {
-                          Amour.sort((a,b) => new Date(b.date_sortie) - new Date(a.date_sortie))
-                          .map((film, index) => {
-                            return (
-                              <CardFilm
-                                key={index}
-                                {...film}
-                                />
+                        {amour.map((movie, index) =>{
+                            return(
+                              <CardFilm key={index}
+                              {...movie}/>
                             )
-                          })
-                        }
+                          })}
                     </Row>
                     </Tab.Pane>
 
                     <Tab.Pane eventKey="fourth">
                     <Row>
-                        {
-                          Horreur.sort((a,b) => new Date(b.date_sortie) - new Date(a.date_sortie))
-                          .map((film, index) => {
-                            return (
-                              <CardFilm
-                                key={index}
-                                {...film}
-                                />
+                        {horror.map((movie, index) =>{
+                            return(
+                              <CardFilm key={index}
+                              {...movie}/>
                             )
-                          })
-                        }
+                          })}
                     </Row>
                     </Tab.Pane>
 
                     <Tab.Pane eventKey="Fifth">
                     <Row>
-                        {
-                          Action.sort((a,b) => new Date(b.date_sortie) - new Date(a.date_sortie))
-                          .map((film, index) => {
-                            return (
-                              <CardFilm
-                                key={index}
-                                {...film}
-                                />
+                        {sciencefiction.map((movie, index) =>{
+                            return(
+                              <CardFilm key={index}
+                              {...movie}/>
                             )
-                          })
-                        }
+                          })}
                     </Row>
                     </Tab.Pane>
                     
