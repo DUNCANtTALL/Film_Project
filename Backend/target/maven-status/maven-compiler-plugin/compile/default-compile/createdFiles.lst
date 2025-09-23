@@ -1,4 +1,9 @@
 com\monprojet\App.class
-com\monprojet\MongoDBConnection.class
-com\monprojet\MovieRessource.class
-com\monprojet\Movie.class
+com\monprojet\models\Category.class
+com\monprojet\services\MovieService.class
+com\monprojet\services\CategoryService.class
+com\monprojet\db\MongoDBConnection.class
+com\monprojet\models\Movie.class
+com\monprojet\ressources\CategoryRessource.class
+com\monprojet\RestApplication.class
+com\monprojet\ressources\MovieRessource.class
