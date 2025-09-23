@@ -7,6 +7,19 @@
   font-size: 50px;
 }
 
+p{
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.nav-link{
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.text-header:hover {
+  box-shadow: 10px 10px 10px rgb(255, 255, 255);
+  
+}
+
 .NavigationCategories{
   margin: 160px 0 100px 0;
 }
@@ -44,4 +57,21 @@
 div.card-title.h5{
   font-family: 'Courier New', Courier, monospace;
   font-weight: bold;
+}
+
+.InputCategorie{
+  margin: 10px;
+  height: 40px;
+}
+
+button{
+  height: 40px;
+}
+
+.deleteCategorie{
+  padding-left: 20px;
+}
+
+.buttonCategorie{
+  margin: 10px;
 }

@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 
 function CardFilm({ ...film }) {
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card style={{ width: '20rem'}}>
       <Card.Body>
         <Card.Title>{film.name}</Card.Title>
         <Card.Text>

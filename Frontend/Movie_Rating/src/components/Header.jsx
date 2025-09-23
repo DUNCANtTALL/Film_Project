@@ -1,7 +1,7 @@
 function Header() {
   return (
     <section className='Header text-white'>
-        Movie Time
+        <p className="text-header">Movie Time</p>
     </section>
   )
 }
