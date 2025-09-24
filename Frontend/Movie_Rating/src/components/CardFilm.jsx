@@ -1,22 +1,13 @@
-import Card from 'react-bootstrap/Card';
-
-
-function CardFilm({ ...film }) {
+function CardFilm({ name, synopsis, realisateur, listeDesActeurs, dateDeSortie }) {
   return (
-    <Card style={{ width: '20rem'}}>
-      <Card.Body>
-        <Card.Title>{film.name}</Card.Title>
-        <Card.Text>
-          <span><strong>Réalisateur</strong>: {film.realisateur}</span><br />
-          <span><strong>Synopsis</strong>: {film.synopsis}</span><br />
-          <span><strong>Date de réalisation</strong>: {film.dateDeRealisation}</span><br />
-          <span><strong>Date de sortie</strong>: {film.dateDeSortie}</span><br />
-          <span><strong>Acteurs</strong>: {film.listeDesActeurs.join(', ')}</span><br />
-        </Card.Text>
-      </Card.Body>
-    </Card>
+    <div className="card">
+      <h3>{name}</h3>
+      <p>{synopsis}</p>
+      <p><strong>Director:</strong> {realisateur}</p>
+      <p><strong>Actors:</strong> {listeDesActeurs.join(", ")}</p>
+      <p><strong>Release Date:</strong> {dateDeSortie}</p>
+    </div>
   );
 }
 
-
-export default CardFilm
+export default CardFilm;

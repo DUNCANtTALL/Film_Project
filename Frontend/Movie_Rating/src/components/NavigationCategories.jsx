@@ -1,126 +1,55 @@
-import { Nav, Row, Tab } from "react-bootstrap"
-/*import { 
-  Science_Fiction,  
-  Amour,
-  Humour,
-  Horreur,
-  Action
-} from "../data";*/
-
-import movies from "../data";
-import CardFilm from "./CardFilm"
+import { Nav, Row, Tab } from "react-bootstrap";
+import CardFilm from "./CardFilm";
 import { useEffect, useState } from "react";
-
-
+import { get_list_of_movies, get_list_of_categories } from "../services/services";
 
 function NavigationCategories() {
+  const [movies, setMovies] = useState([]);
+  const [categories, setCategories] = useState([]);
 
-  const [actions,SetActions] = useState([]);
-  const [amour,SetAmour] = useState([]);
-  const [horror,SetHorror] = useState([]);
-  const [humour,SetHumour] = useState([]);
-  const [sciencefiction,SetSciencefiction] = useState([]);
+ useEffect(() => {
+  async function fetchData() {
+    try {
+      const fetchedMovies = await get_list_of_movies();
+      const fetchedCategories = await get_list_of_categories();
 
-  useEffect(() => {
-    SetActions(movies.filter((movie, index) => movie.category === "Action"))
-    SetAmour(movies.filter((movie, index) => movie.category === "Amour"))
-    SetHorror(movies.filter((movie, index) => movie.category === "Horror"))
-    SetHumour(movies.filter((movie, index) => movie.category === "Humour"))
-    SetSciencefiction(movies.filter((movie, index) => movie.category === "Science-Fiction"))
-  },[movies])
-
+      console.log("Fetched Movies:", fetchedMovies); 
+      console.log("Fetched Categories:", fetchedCategories); 
+      setMovies(fetchedMovies);
+      setCategories(fetchedCategories);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  fetchData();
+}, []);
   return (
-    <div className='NavigationCategories'>
-        <Tab.Container id="projects-tabs" defaultActiveKey="first">
-                  <Nav variant="pills" className="mb-5 justify-content-center align-items-center navLink" id="pills-tab">
-                    <Nav.Item>
-                      <Nav.Link eventKey="first">
-                        Science Fiction
-                      </Nav.Link>
-                    </Nav.Item>
+    <div className="NavigationCategories">
+      <Tab.Container id="projects-tabs" defaultActiveKey={categories[0]?._id}>
+        <Nav variant="pills" className="mb-5 justify-content-center align-items-center navLink">
+          {categories.map((cat) => (
+            <Nav.Item key={cat._id}>
+              <Nav.Link eventKey={cat._id}>{cat.name}</Nav.Link>
+            </Nav.Item>
+          ))}
+        </Nav>
 
-                    <Nav.Item>
-                      <Nav.Link eventKey="second">Humour</Nav.Link>
-                    </Nav.Item>
-
-                    <Nav.Item>
-                      <Nav.Link eventKey="third">Amour</Nav.Link>
-                    </Nav.Item>
-
-                    <Nav.Item>
-                      <Nav.Link eventKey="fourth">Horror</Nav.Link>
-                    </Nav.Item>
-
-                    <Nav.Item>
-                      <Nav.Link eventKey="Fifth">Action</Nav.Link>
-                    </Nav.Item>
-                  </Nav>
-
-                  <Tab.Content id="slideInUp" >
-                    
-                    <Tab.Pane eventKey="first">
-                      <Row>
-                        {
-                          actions.map((movie, index) =>{
-                            return(
-                              <CardFilm key={index}
-                              {...movie}/>
-                            )
-                          })
-                        }
-                    </Row>
-                    </Tab.Pane>
-
-                    <Tab.Pane eventKey="second">
-                    <Row>
-                        {
-                          humour.map((movie, index) =>{
-                            return(
-                              <CardFilm key={index}
-                              {...movie}/>
-                            )
-                          })
-                        }
-                    </Row>
-                    </Tab.Pane>
-
-                    <Tab.Pane eventKey="third">
-                    <Row>
-                        {amour.map((movie, index) =>{
-                            return(
-                              <CardFilm key={index}
-                              {...movie}/>
-                            )
-                          })}
-                    </Row>
-                    </Tab.Pane>
-
-                    <Tab.Pane eventKey="fourth">
-                    <Row>
-                        {horror.map((movie, index) =>{
-                            return(
-                              <CardFilm key={index}
-                              {...movie}/>
-                            )
-                          })}
-                    </Row>
-                    </Tab.Pane>
-
-                    <Tab.Pane eventKey="Fifth">
-                    <Row>
-                        {sciencefiction.map((movie, index) =>{
-                            return(
-                              <CardFilm key={index}
-                              {...movie}/>
-                            )
-                          })}
-                    </Row>
-                    </Tab.Pane>
-                    
-                  </Tab.Content>
-                </Tab.Container>
+        <Tab.Content>
+          {categories.map((cat) => (
+            <Tab.Pane eventKey={cat._id} key={cat._id}>
+              <Row>
+                {movies
+                  .filter((movie) => movie.categoryID === cat.category_id)
+                  .map((movie, index) => (
+                    <CardFilm key={index} {...movie} />
+                  ))}
+              </Row>
+            </Tab.Pane>
+          ))}
+        </Tab.Content>
+      </Tab.Container>
     </div>
-  )
+  );
 }
 
-export default NavigationCategories
+export default NavigationCategories;

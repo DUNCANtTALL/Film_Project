@@ -1,91 +1,54 @@
-import React, { useState } from "react";
-import InputCategorie from "./InputCategorie";
-import { Col } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Tab, Nav, Row } from "react-bootstrap";
+import CardFilm from "./CardFilm";
+import { get_list_of_movies, get_list_of_categories } from "../services/services";
 
-function AddCategorie() {
-  const [categoryName, setCategoryName] = useState("");
+function NavigationCategories() {
+  const [movies, setMovies] = useState([]);
   const [categories, setCategories] = useState([]);
 
-  // film temporaire en cours de saisie
-  const [film, setFilm] = useState({
-    name: "",
-    realisateur: "",
-    dateDeRealisation: "",
-    dateDeSortie: "",
-    synopsis: "",
-    listeDesActeurs: [],
-  });
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const fetchedMovies = await get_list_of_movies();
+        const fetchedCategories = await get_list_of_categories();
 
-  const [films, setFilms] = useState([]);
+        setMovies(fetchedMovies);
+        setCategories(fetchedCategories);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchData();
+  }, []);
 
-  // Ajouter un film temporaire à la liste
-  const handleAddFilm = () => {
-    if (!film.name) return; // au moins le nom requis
-    setFilms([...films, film]);
-    setFilm({
-        name: "",
-        realisateur: "",
-        dateDeRealisation: "",
-        dateDeSortie: "",
-        synopsis: "",
-        listeDesActeurs: [],
-    });
-  };
-
-  // Créer la catégorie avec ou sans films
-  const handleCreateCategory = () => {
-
-    const newCategory = {
-      name: categoryName,
-      films: [...films],
-    };
-
-    setCategories([...categories, newCategory]);
-
-    // reset
-    setCategoryName("");
-    setFilms([]);
-  };
+  if (categories.length === 0) return <p>Loading...</p>;
 
   return (
-    <div className="text-white p-4">
+    <Tab.Container id="categories-tabs" defaultActiveKey={categories[0].id.timestamp}>
+      <Nav variant="pills" className="mb-3 justify-content-center">
+        {categories.map((category) => (
+          <Nav.Item key={category.id.timestamp}>
+            <Nav.Link eventKey={category.id.timestamp}>{category.name}</Nav.Link>
+          </Nav.Item>
+        ))}
+      </Nav>
 
-      {/* Création catégorie */}
-      <Col>
-        <InputCategorie type={"text"} placeholder={"Nom de la catégorie"} value={categoryName} onChange={(e) => setCategoryName(e.target.value)}/>
-        <button className="ms-3" onClick={handleCreateCategory}>Créer la catégorie</button>
-      </Col>
-      
-
-      <h3>Ajouter un film (optionnel)</h3>
-
-      <Col>
-        {/* Ajout d’un film optionnel */}
-        <InputCategorie type={"text"} placeholder={"Nom du film"} value={film.name} onChange={(e) => setFilm({ ...film, name: e.target.value })}/>
-
-        <InputCategorie type={"text"} placeholder={"Réalisateur"} value={film.realisateur} onChange={(e) => setFilm({ ...film, director: e.target.value })}/>
-
-        
-        <InputCategorie
-            type="text"
-            placeholder="Date de sortie"
-            value={film.releaseDate}
-            onChange={(e) => setFilm({ ...film, releaseDate: e.target.value })}
-            dynamicDate={true}
-            />
-
-        <InputCategorie type={"text"} placeholder={"Date de realisation"} value={film.dateDeSortie} onChange={(e) => setFilm({ ...film, releaseDate: e.target.value })} dynamicDate={true}/>
-
-        <InputCategorie type={"text"} placeholder={"Synopsis"} value={film.synopsis} onChange={(e) => setFilm({ ...film, synopsis: e.target.value })}/>
-
-        <InputCategorie type={"text"} placeholder={"Acteurs principaux"} value={film.listeDesActeurs} onChange={(e) => setFilm({ ...film, actors: e.target.value })}/>
-
-        <button className="ms-3"onClick={handleAddFilm}>Ajouter ce film</button>
-      </Col>
-      
-
-    </div>
+      <Tab.Content>
+        {categories.map((category) => (
+          <Tab.Pane eventKey={category.id.timestamp} key={category.id.timestamp}>
+            <Row>
+              {movies
+                .filter((movie) => movie.categoryID.timestamp === category.id.timestamp)
+                .map((movie) => (
+                  <CardFilm key={movie.categoryID.timestamp + movie.name} {...movie} />
+                ))}
+            </Row>
+          </Tab.Pane>
+        ))}
+      </Tab.Content>
+    </Tab.Container>
   );
 }
 
-export default AddCategorie;
+export default NavigationCategories;
