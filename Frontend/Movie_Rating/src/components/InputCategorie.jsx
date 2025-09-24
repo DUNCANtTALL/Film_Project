@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
-function InputCategorie({ type, placeholder, value, onChange, dynamicDate }) {
-  const [inputType, setInputType] = useState(type)
+function InputCategorie({ type, placeholder, value, onChange, dynamicDate = false }) {
+  const [inputType, setInputType] = useState(type) // declartion du type et utilisation de useState pour que le type puisse changer dynamiquement
 
   return (
     <input
@@ -10,10 +10,13 @@ function InputCategorie({ type, placeholder, value, onChange, dynamicDate }) {
       placeholder={placeholder}
       value={value}
       onChange={onChange}
+      
       onFocus={() => {
+        {/*onFocus => quand j'entre dans l'input*/}
         if (dynamicDate) setInputType('date')
       }}
       onBlur={() => {
+        {/*onBlur => quand je sors de l'input*/}
         if (dynamicDate && !value) setInputType('text') // redevient text si vide
       }}
     />
