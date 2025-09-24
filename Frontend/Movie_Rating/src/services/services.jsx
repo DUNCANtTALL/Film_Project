@@ -15,3 +15,5 @@ export async function get_list_of_movies() {
     throw error; // On relance l'erreur pour que le composant puisse gérer
   }
 }
+
+//add new end-points
