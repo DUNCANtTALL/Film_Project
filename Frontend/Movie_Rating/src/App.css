@@ -75,3 +75,27 @@ button{
 .buttonCategorie{
   margin: 10px;
 }
+
+.Admin{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap; /* Permet le retour à la ligne */
+  justify-content: center;
+}
+
+.deleteCategorie{
+  padding-top: 50px;
+  margin: 20px;
+}
+
+.deleteCategorie:hover{
+  box-shadow: 0 4px 6px rgb(255, 255, 255);
+}
+
+.addCategorie:hover{
+  box-shadow: 0 4px 6px rgb(255, 255, 255);
+}
+
+.addCategorie{
+  margin: 20px;
+}

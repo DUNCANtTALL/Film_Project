@@ -24,3 +24,5 @@ export async function get_list_of_categories() {
     throw error; // Rethrow the error for the component to handle
   }
 }
+
+//add new end-points
