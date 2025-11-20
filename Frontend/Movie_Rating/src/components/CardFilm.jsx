@@ -1,27 +1,22 @@
-import { Col, Card } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 
-function CardFilm({ movie }) {
+
+
+function CardFilm({ movie }) {;
+  console.log(movie);
   return (
-    
-    <Col md={4} className="mb-4">
-      <Card style={{ borderRadius: "15px", overflow: "hidden" }}>
-        <Card.Img 
-          variant="top" 
-          src={movie.poster} 
-          alt={movie.movieName} 
-          style={{ height: "400px", objectFit: "cover" }} 
-        />
-        <Card.Body>
-          <Card.Title>{movie.movieName}</Card.Title>
-          <Card.Text>
-            <strong>Réalisateur :</strong> {movie.realisateur}<br />
-            <strong>Date réalisation :</strong> {movie.dateRealisation}<br />
-            <strong>Date sortie :</strong> {movie.dateSortie}<br />
-            <strong>Synopsis :</strong> {movie.synopsis}<br />
-            <strong>Acteurs :</strong> {movie.listeActeurs?.join(", ")}
-          </Card.Text>
-        </Card.Body>
-      </Card>
+    <Col>
+      <div className="proj-imgbx">
+        <img src={movie.poster} alt={movie.movieName} style={{ width: "100%", borderRadius: "30px" }} />
+        <div className="proj-txtx">
+          <h4>{movie.movieName}</h4>
+          <span><b>Réalisateur :</b> {movie.realisateur}</span><br />
+          <span><b>Date réalisation :</b> {movie.dateRealisation}</span><br />
+          <span><b>Date sortie :</b> {movie.dateSortie}</span><br />
+          <span><b>Synopsis :</b> {movie.synopsis}</span><br />
+          <span><b>Acteurs :</b> {movie.listeActeurs?.join(", ")}</span>
+        </div>
+      </div>
     </Col>
   );
 }

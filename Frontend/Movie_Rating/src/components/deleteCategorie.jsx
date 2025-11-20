@@ -1,26 +1,27 @@
 import { useState, useEffect } from "react";
 import { categories, DeleteCategory } from "../services/services";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function DeleteCategoryPage() {
   const [categoryList, setCategoryList] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   // Load categories on mount
   useEffect(() => {
-  const loadCategories = async () => {
-    try {
-      const data = await categories();
-      console.log("Fetched categories:", data); 
-      setCategoryList(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  loadCategories();
-}, []);
+    const loadCategories = async () => {
+      try {
+        const data = await categories();
+        console.log("Fetched categories:", data);
+        setCategoryList(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    loadCategories();
+  }, []);
 
 
   const handleDelete = async () => {
@@ -34,11 +35,15 @@ function DeleteCategoryPage() {
       setMessage("");
       const response = await DeleteCategory(selectedCategory);
       setMessage(response || "Category deleted successfully.");
-      
-      // Remove deleted category from dropdown
-      setCategoryList(categoryList.filter(c => c.category_name !== selectedCategory));
+
+      setCategoryList(categoryList.filter(c => {
+        const name = c.categoryName ?? c.name ?? c.category_name ?? "";
+        return name !== selectedCategory;
+      }));
       setSelectedCategory("");
-      redirect("/");
+
+      // Navigate back to home
+      navigate("/");
     } catch (error) {
       setMessage("Failed to delete category: " + (error.response?.data || error.message));
     } finally {
@@ -56,11 +61,15 @@ function DeleteCategoryPage() {
         style={{ width: "100%", padding: "10px", margin: "10px 0", borderRadius: "5px", border: "1px solid #ccc" }}
       >
         <option value="">-- Select Category --</option>
-        {categoryList.map((cat) => (
-  <option key={cat.categoryID} value={cat.categoryName}>
-    {cat.categoryName}
-  </option>
-))}
+        {categoryList.map((cat, idx) => {
+          const id = cat.categoryID ?? cat.id ?? cat.category_id ?? idx;
+          const name = cat.categoryName ?? cat.name ?? cat.category_name ?? `Category ${idx + 1}`;
+          return (
+            <option key={id} value={name}>
+              {name}
+            </option>
+          );
+        })}
 
       </select>
 
@@ -82,7 +91,7 @@ function DeleteCategoryPage() {
       </button>
 
       {message && (
-        <p style={{ marginTop: "15px", textAlign: "center", color: message.includes("success") ? "green" : "red" }}>
+        <p style={{ marginTop: "15px", textAlign: "center", color: message.toLowerCase().includes("success") ? "green" : "red" }}>
           {message}
         </p>
       )}
