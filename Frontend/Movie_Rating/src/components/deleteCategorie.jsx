@@ -42,7 +42,6 @@ function DeleteCategoryPage() {
       }));
       setSelectedCategory("");
 
-      // Navigate back to home
       navigate("/");
     } catch (error) {
       setMessage("Failed to delete category: " + (error.response?.data || error.message));

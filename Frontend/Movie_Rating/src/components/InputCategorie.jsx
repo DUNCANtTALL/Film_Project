@@ -12,11 +12,9 @@ function InputCategorie({ type, placeholder, value, onChange, dynamicDate = fals
       onChange={onChange}
       
       onFocus={() => {
-        {/*onFocus => quand j'entre dans l'input*/}
         if (dynamicDate) setInputType('date')
       }}
       onBlur={() => {
-        {/*onBlur => quand je sors de l'input*/}
         if (dynamicDate && !value) setInputType('text') // redevient text si vide
       }}
     />

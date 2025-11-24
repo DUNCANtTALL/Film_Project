@@ -2,6 +2,7 @@ import axios from "axios";
 
 const movies_url= "http://localhost:8080/backend/api/movies";
 const categories_url = "http://localhost:8080/backend/api/categories"; 
+const API_BASE_URL = "http://localhost:8080/backend/api/reviews/movie";
 
 
 export async function movies() {
@@ -51,6 +52,28 @@ export async function DeleteCategory(category_name) {
     return response.data;
   } catch (error) {
     console.error("Error deleting category:", error);
+    throw error;
+  }
+}
+
+export async function AddReview(movieId, reviewPayload) {
+  try {
+    const response = await axios.post("http://localhost:8080/backend/api/reviews",
+      reviewPayload,   
+      { headers: { "Content-Type": "application/json" } }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error adding review:", error);
+    throw error;
+  }
+}
+export async function GetMovieReviews(movieId) {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/${movieId}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching reviews for movie ID ${movieId}:`, error);
     throw error;
   }
 }

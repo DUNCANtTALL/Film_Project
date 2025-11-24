@@ -38,7 +38,6 @@ function AddCategorie() {
     }
 
     try {
-      // Fetch existing categories to check duplicate
       const listRes = await fetch("http://localhost:8080/backend/api/categories");
       if (!listRes.ok) {
         throw new Error(`Failed to fetch categories: ${listRes.status}`);
@@ -76,13 +75,11 @@ function AddCategorie() {
           break;
         }
 
-        // If 400 with message indicating missing field, continue to next payload
         if (result.status === 400) {
           // try next
           continue;
         }
 
-        // For non-400 errors, stop trying
         if (result.status >= 500) break;
       }
 

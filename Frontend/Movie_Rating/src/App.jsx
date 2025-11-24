@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import AddCategorie from "./components/AddCategorie";
 import NavigationCategories from "./components/NavigationCategories";
 import AddMoviePage from "./components/AddMoviePage";
-import "./App.css"; // 👈 import CSS for navbar styles
+import "./App.css"; // 
 import DeleteCategoryPage from "./components/deleteCategorie";
+import MovieDetailPage from "./components/MovieDetails";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <li>
               <Link to="/add-movie">Add Movie</Link>
             </li>
+             
 
             <li>
               <Link to="/delete-categorie">Delete Categorie</Link>
@@ -46,6 +48,9 @@ function App() {
             />
             <Route path="/add-movie" element={<AddMoviePage />} />
             <Route path="/delete-categorie" element={<DeleteCategoryPage/>} />
+            <Route path="/movie/:movieNameSlug" element={<MovieDetailPage />} />
+            <Route path="/movie-detail" element={< MovieDetailPage/>} />
+
           </Routes>
         </div>
       </div>
